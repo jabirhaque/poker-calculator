@@ -9,12 +9,20 @@ import copy
 def probability(game):
     num = 5000
     win_count = 0
+    draw_count = 0
+    loss_count = 0
     for i in range(num):
         end_game = generate_gameplay(game)
-        if(win(end_game)):
+        if(win(end_game) == 1):
             win_count += 1
-    return 100*(win_count/num)
-
+        elif (win(end_game) == -1):
+            loss_count += 1
+        else:
+            draw_count += 1
+    print("P(WIN): ", 100*(win_count/num))
+    print("P(DRAW): ", 100 * (draw_count / num))
+    print("P(LOSS): ", 100 * (loss_count / num))
+    return [100*(win_count/num), 100*(draw_count/num), 100*(loss_count/num)]
 
 def win(game):
     player_set = game.pocket + game.community
@@ -34,7 +42,12 @@ def win(game):
             if rating < opponent_rating:
                 opponent_rating = rating
 
-    return player_rating < opponent_rating
+    if (player_rating < opponent_rating):
+        return 1
+    if (player_rating > opponent_rating):
+        return -1
+    else:
+        return 0
 
 def generate_gameplay(game):
     # takes a game and returns a valid gameplay
@@ -58,6 +71,12 @@ def generate_gameplay(game):
     for card in (filled_game.pocket + filled_game.community):
         unused_cards.pop(card.string, None)
 
+    for i in range(2-len(filled_game.pocket)):
+        keys = list(unused_cards.keys())
+        random_key = random.choice(keys)
+        filled_game.pocket.append(Card(random_key))
+        unused_cards.pop(random_key, None)
+
     for i in range(5-len(filled_game.community)):
         keys = list(unused_cards.keys())
         random_key = random.choice(keys)
@@ -75,5 +94,5 @@ def generate_gameplay(game):
 
     return filled_game
 
-game = Game([Card("AS"), Card("KD")], [], 1, [])
+game = Game([], [], 9, [])
 print(probability(game))

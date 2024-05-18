@@ -93,6 +93,3 @@ def generate_gameplay(game):
         filled_game.opponent_cards.append(pocket)
 
     return filled_game
-
-game = Game([], [], 9, [])
-print(probability(game))

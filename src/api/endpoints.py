@@ -12,7 +12,7 @@ def get_probability():
     community = [Card(key) for key in request.args.getlist('community')]
     opponent_num = int(request.args.get('opponent_num'))
     game = Game(pocket, community, opponent_num, [])
-    return jsonify({'probability': probability(game)[0]})
+    return jsonify({'probability': probability(game)})
 
 if __name__ == '__main__':
     app.run()

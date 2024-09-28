@@ -1,10 +1,8 @@
 import itertools
 import random
-
-from game import *
-from card import *
-from evaluator import evaluate
 import copy
+from src.model.card import *
+from src.service.evaluator import evaluate
 
 def probability(game):
     num = 5000

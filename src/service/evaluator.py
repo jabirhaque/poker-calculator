@@ -1,5 +1,4 @@
-from lookup import *
-from card import *
+from src.table.lookup import *
 import ctypes
 def evaluate(hand):
     # hands is an array containing 5 card objects, evaluate returns the ranking of hand
